@@ -13,9 +13,3 @@ build/Release
 **/test**
 
 **/.*/**
-
-./worker/language/**
-
-./io/data/**
-
-./io/db/**
