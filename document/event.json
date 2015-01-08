@@ -1,0 +1,60 @@
+{
+  "planet" : {
+    "events" : [
+      "onCreate",
+      "onLoad",
+      "onTick",
+      "onSave"
+    ],
+    "world" : {
+      "events" : [
+        "onCreate",
+        "onLoad",
+        "onTick",
+        "onSave"
+      ],
+      "chunk" : {
+        "events" : [
+          "onCreate",
+          "onLoad",
+          "onTick",
+          "onSave"
+        ]
+      },
+      "block" : {
+        "events" : [
+          "onPlaced",
+          "onUpdate",
+          "onReplaced"
+        ]
+      },
+      "entityblock" : {
+        "events" : [
+          "onCreate",
+          "onLoad",
+          "onTick",
+          "onSave"
+        ]
+      }
+    },
+    "entity" : {
+      "events" : [
+        "onCreate",
+        "onLoad",
+        "onTick",
+        "onSave"
+      ]
+    }
+  },
+  "player" : {
+    "events" : [
+      "onRegister",
+      "onJoin",
+      "onWatch",
+      "onKeyAction",
+      "onAction",
+      "onInput",
+      "onPart"
+    ]
+  }
+}

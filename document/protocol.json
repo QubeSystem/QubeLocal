@@ -1,0 +1,111 @@
+{
+  "general" : {
+    "type" : "type<String>",
+    "data" : "data<Object>"
+  },
+
+
+  "planet -> worker" : {
+    "order" : {
+      "id" : "id<Integer>",
+      "event" : "event<String>",
+      "info" : "info<Object>"
+    },
+
+    "answer" : {
+      "id" : "id<Integer>",
+      "event" : "event<String>",
+      "info" : "info<Object>",
+      "data" : {
+        "key<String>" : "data<Object>"
+      }
+    }
+  },
+
+
+  "worker -> planet" : {
+    "ask" : {
+      "id" : "id<Integer>",
+      "data" : [
+        "key<String>"
+      ]
+    },
+
+    "result" : {
+      "id" : "id<Integer>",
+      "data" : {
+        "key<String>" : "data<Object>"
+      }
+    },
+
+    "event" : {
+      "event" : "event<String>",
+      "info" : "info<Object>",
+      /*Not required*/ "target" : "target<String>"
+    },
+
+    "load" : {
+      "key" : "key<String>"
+    },
+    "save" : {
+      "key" : "key<String>"
+    },
+    "log" : {
+      "log" : "log<String>"
+    },
+    "err" : {
+      "log" : "log<String>"
+    }
+  },
+
+
+  "planet -> client" : {
+    "block" : {
+      "coord" : [
+        "x<Integer>",
+        "y<Integer>",
+        "z<Integer>"
+      ],
+      "data" : "data<Object>"
+    },
+
+    "entity" : {
+      "id" : "id<String>",
+      "data" : "data<Object>"
+    },
+
+    "player" : {
+      "form" : "form<String>",
+      "type" : "module.uid<String*2>",
+      "data" : "data<Object>"
+    },
+
+    "sound" : {
+      "type" : "module.uid<String*2>",
+      "volume" : "volume<Number>"
+    },
+
+    "custom" : {
+      "event" : "event<String>",
+      "info" : "info<Object>"
+    }
+  },
+
+
+  "client -> planet" : {
+    "key" : {
+      "name" : "name<String>",
+      "isDown" : "isDown<Boolean>",
+      /*when GUI is opened*/ "GUI" : {
+        "module" : "module<String>",
+        "GUI" : "GUI<String>",
+        "slot" : "slot<String>"
+      }
+    },
+
+    "custom" : {
+      "event" : "event<String>",
+      "info" : "info<Object>"
+    }
+  }
+}

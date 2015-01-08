@@ -1,0 +1,66 @@
+{
+  "planet" : {
+    "data" : {
+      "blockList" : [
+        "module.uid<String*2>"
+      ]
+    },
+    "world" : {
+      "name<String>" : {
+        "data" : {},
+        "chunk" : {
+          "x,y,z<Integer*3>" : {
+            "data" : {
+              "blocks" : "abc..<String>",
+              "entityblocks" : [
+                "x,y,z<Integer*3>"
+              ],
+              "entities" : [
+                "uid<String>"
+              ]
+            }
+          }
+        },
+        "entityblock" : {
+          "x,y,z<Integer*3>" : {
+            "data" : {
+              "type" : "module.uid<String*2>"
+            }
+          }
+        }
+      }
+    },
+    "entity" : {
+      "uid<String>" : {
+        "data" : {
+          "type" : "module.uid<String*2>",
+          "position" : [
+            "x<Number>",
+            "y<Number>",
+            "z<Number>"
+          ],
+          "top" : "top<Number>",
+          "bottom" : "bottom<Number>",
+          "width" : "width<Number>"
+        }
+      }
+    },
+    "player" : {
+      "id<String>" : {
+        "data" : {
+          "position" : [
+            "x<Number>",
+            "y<Number>",
+            "z<Number>"
+          ],
+          "gui" : {
+            "type" : "module.uid<String*2>"
+          },
+          "hud" : {
+            "module.uid<String*2>" : "hud<Object>"
+          }
+        }
+      }
+    }
+  }
+}
