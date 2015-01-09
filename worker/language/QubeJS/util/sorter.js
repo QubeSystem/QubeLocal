@@ -33,7 +33,7 @@ exports.execute = function(sorterCallback) {
         var args = {};
         var after = module1.meta.after;
         for (var i=0;i<after.length;i++) {
-            if (resultNames.indexOf(after[i]) < 0 && names.indexOf(after[i])) {
+            if (resultNames.indexOf(after[i]) < 0 && names.indexOf(after[i]) >= 0) {
                 modules.push(module1);
                 flag = false;
                 callback();

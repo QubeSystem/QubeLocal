@@ -15,7 +15,6 @@ exports.on = function(event, requester, handler) {
 };
 
 function order(input) {
-    console.log('oredered')
     if (!registry[input.event]) {
         socket.emit('ask', {
             id : input.id,
@@ -27,16 +26,16 @@ function order(input) {
     async.each(registry[input.event], function(each, cb) {
         each.requester(input.info, function(err, request) {
             if (err) {
-                cb(err);
+                socket.emit('err', 'Error on handling event\'s data requester');
+                socket.emit('err', err);
+                socket.emit('err', err.stack);
+                cb();
                 return;
             }
             util.mergeArr(requests, request);
             cb();
         });
-    }, function(err) {
-        if (err) {
-            console.error('Error on handling event\'s data requester', err, err.stack);
-        }
+    }, function() {
         socket.emit('ask', {
             id : input.id,
             data : requests
@@ -45,7 +44,6 @@ function order(input) {
 }
 
 function answer(input) {
-    console.log('answered')
     if (!registry[input.event]) {
         socket.emit('result', {
             id : input.id,
@@ -59,7 +57,10 @@ function answer(input) {
     async.eachSeries(registry[input.event], function(elem, cb) {
         elem.handler(input.info, input.data, function(err, output) {
             if (err) {
-                cb(err);
+                socket.emit('err', 'Error on executing event handlers for event ' + event);
+                socket.emit('err', err);
+                socket.emit('err', err.stack);
+                cb();
                 return;
             }
             for (var key in output) {
@@ -69,12 +70,7 @@ function answer(input) {
             }
             cb();
         });
-    }, function(err) {
-        if (err) {
-            socket.emit('err', 'Error on executing event handlers for event ' + event);
-            socket.emit('err', err);
-            socket.emit('err', err.stack);
-        }
+    }, function() {
         socket.emit('result', {
             id : input.id,
             data : saves
