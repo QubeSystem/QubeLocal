@@ -29,14 +29,28 @@ var tickTime = Math.floor(1000/setting.maxTPS);
 var timeFlag = true;
 var eventFlag = true;
 
+var time = 0;
+var lastTickTime = tickTime;
+
 function loop() {
     if (!timeFlag || !eventFlag) return;
     timeFlag = eventFlag = false;
+
+    var newTime = new Date().getTime();
+    if (time) lastTickTime = time - newTime;
+    time = newTime;
 
     setTimeout(function() {
         timeFlag = true;
         loop();
     }, tickTime);
+
+    eventQueue.push({
+        event : 'core.tick',
+        info : {
+            ltt : lastTickTime
+        }
+    });
 
     async.each(loadQueue, function(key, cb) {
         data.load(key, cb);

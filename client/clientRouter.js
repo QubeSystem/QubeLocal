@@ -27,6 +27,7 @@ exports.addUnit = function(uid, connection, onDisconnect) {
         });
     });
     unit.on('custom', function(data) {
+        data.event = 'client.' + data.event;
         addEvent(data);
     });
     clients[uid] = unit;

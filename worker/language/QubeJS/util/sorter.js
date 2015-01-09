@@ -4,7 +4,6 @@ var async = require('async');
 var modules = [];
 
 exports.add = function(meta, module) {
-    meta.require = meta.require || [];
     meta.after = meta.after || [];
     modules.push({
         meta : meta,
@@ -12,21 +11,15 @@ exports.add = function(meta, module) {
     });
 };
 
-exports.execute = function() {
+exports.execute = function(sorterCallback) {
     if (modules.length <= 0) return;
 
     var returns = {};
     var resultNames = [];
+    resultNames.shift();
 
     var names = util.childArr(util.childArr(modules, 'meta'), 'name');
 
-    modules.forEach(function(module1) {
-        module1.meta.require.forEach(function(require1) {
-            if (names.indexOf(require1) === -1) {
-                throw new Error('Missing required module: ' + require1);
-            }
-        });
-    });
     var count = 0;
     var flag = true;
     async.whilst(function() {
@@ -36,7 +29,7 @@ exports.execute = function() {
             throw new Error('Circular loop detected... I think');
         }
 
-        var module1 = modules.pop();
+        var module1 = modules.shift();
         var args = {};
         var after = module1.meta.after;
         for (var i=0;i<after.length;i++) {
@@ -48,9 +41,11 @@ exports.execute = function() {
             }
             args[after[i]] = returns[after[i]];
         }
-        returns[module1.meta.name] = module1.module(args);
-        callback();
+        module1.module(args, function(result) {
+            returns[module1.meta.name] = result;
+            callback();
+        });
     }, function(err) {
-
+        sorterCallback();
     });
 };

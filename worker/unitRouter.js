@@ -47,8 +47,8 @@ Router.prototype.order = function order() {
     if (this.units.length <= 0 || this.list.length <= 0) {
         return;
     }
-    var unit = this.units.pop();
-    var id = this.list.pop();
+    var unit = this.units.shift();
+    var id = this.list.shift();
 
     unit.emit('order', {
         id : id,
@@ -62,12 +62,12 @@ Router.prototype.answer = function answer() {
     if (self.units.length <= 0 || self.working.length <= 0) {
         return;
     }
-    var unit = self.units.pop();
+    var unit = self.units.shift();
     var workFlag = true;
     async.whilst(function() {
         return workFlag;
     }, function(callback) {
-        var work = self.working.pop();
+        var work = self.working.shift();
         async.each(work.data, function(each, cb) {
             db.get('key', each, function(err, value) {
                 if (err) {

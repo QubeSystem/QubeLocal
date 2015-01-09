@@ -82,5 +82,7 @@ function answer(input) {
     });
 }
 
-socket.on('answer', answer);
-socket.on('order', order);
+exports.init = function() {
+    socket.on('answer', answer);
+    socket.on('order', order);
+}

@@ -5,11 +5,12 @@ process.on('uncaughtException', function(err) {
 var fs = require('fs');
 var sorter = require('./util/sorter');
 var modules = fs.readdirSync('./module');
+var event = require('./util/event');
 
 modules.forEach(function(module) {
     require('./module/' + module + '/main');
 });
 
-sorter.execute();
-
-require('./util/event');
+sorter.execute(function() {
+    event.init();
+});
