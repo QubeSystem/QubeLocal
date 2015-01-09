@@ -11,7 +11,7 @@ Qube.module({
             hello : 'world!',
             got : eventInfo
         }, eventInfo.from);
-        callback(null, {});
+        callback(null, data);
     });
     callback({foo:'bar'});
 });
